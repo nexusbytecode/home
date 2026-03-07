@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Byte Code | Coming Soon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Space+Mono&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-overlay: rgba(10, 10, 10, 0.88);
+            --text-color: #ffffff;
+            --accent-color: #00ffff; /* Cyan for Typing & Heading */
+            --font-main: 'Poppins', sans-serif;
+            --font-heading: 'Montserrat', sans-serif;
+            --font-typing: 'Space Mono', monospace;
+            
+            /* Dark Mode UI Elements (No Cyan) */
+            --nav-color: #ffffff;
+            --btn-bg: rgba(255, 255, 255, 0.1);
+            --btn-border: rgba(255, 255, 255, 0.2);
+        }
+
+        [data-theme="light"] {
+            --bg-overlay: rgba(244, 244, 244, 0.88);
+            --text-color: #1a1a1a;
+            --accent-color: #6200ea; /* Purple for light mode */
+            --nav-color: #1a1a1a;
+            --btn-bg: var(--accent-color);
+            --btn-border: var(--accent-color);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Dynamic Gradient Background */
+            background: linear-gradient(-45deg, #00ffff, #00bfff, #8a2be2, #4b0082);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite; 
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.5s ease;
+            overflow: hidden;
+            font-family: var(--font-main);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-overlay);
+            z-index: 1;
+            transition: 0.5s;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+            color: var(--text-color);
+            width: 100%;
+            max-width: 900px;
+        }
+
+        /* Logo Styling - Non-Cyan in Dark Mode */
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            z-index: 3;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            color: var(--nav-color);
+            transition: 0.3s ease;
+        }
+        .logo:hover {
+            color: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        /* Switch Mode Button - Glassy in Dark Mode */
+        .theme-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            z-index: 3;
+            background: var(--btn-bg);
+            color: #fff;
+            border: 1px solid var(--btn-border);
+            padding: 10px 22px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: 0.3s ease;
+        }
+
+        [data-theme="light"] .theme-btn {
+            color: #ffffff;
+        }
+
+        .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        /* Heading with Gradient Text Animation */
+        h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 6vw, 4rem);
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            background: linear-gradient(-45deg, #00ffff, #8a2be2, #00bfff, #00ffff);
+            background-size: 300% 300%;
+            animation: textGradientShift 6s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+
+        @keyframes textGradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Typing Area */
+        .author-container {
+            font-family: var(--font-typing);
+            font-size: clamp(1rem, 3.5vw, 1.6rem);
+            font-weight: 400;
+            letter-spacing: 2px;
+            height: 1.6em;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        #typing-target {
+            color: var(--accent-color);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: var(--accent-color);
+            margin-left: 5px;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Footer */
+        footer {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+            z-index: 3;
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.6;
+            line-height: 1.8;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive Fixes */
+        @media (max-width: 600px) {
+            .logo, .theme-btn { top: 15px; font-size: 11px; }
+            .logo { left: 15px; }
+            .theme-btn { right: 15px; padding: 7px 15px; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <a href="https://nexusbytecode.in" class="logo">NEXUS BYTE CODE</a>
+
+    <button class="theme-btn" onclick="toggleTheme()">Switch Theme</button>
+
+    <div class="content-wrapper">
+        <h1>We're building something exciting</h1>
+        <div class="author-container">
+            by <span id="typing-target"></span><span class="cursor"></span>
+        </div>
+    </div>
+
+    <footer>
+        2026 © All rights reserved<br>
+        Developed by MD ALI SHEKH
+    </footer>
+
+    <script>
+        // Light/Dark Toggle Function
+        function toggleTheme() {
+            const body = document.body;
+            if (body.getAttribute('data-theme') === 'light') {
+                body.removeAttribute('data-theme');
+            } else {
+                body.setAttribute('data-theme', 'light');
+            }
+        }
+
+        // Dual-Identity Typing Animation
+        const textTarget = document.getElementById('typing-target');
+        const phrases = ["MD ALI SHEKH", "NEXUS BYTE CODE"];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 150;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                // Deleting effect
+                textTarget.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 60; 
+            } else {
+                // Typing effect
+                textTarget.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 130; 
+            }
+
+            // Logic to handle loop
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                typeSpeed = 2500; // Pause at the end
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500; 
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        // Initialize Animation on load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(type, 1000);
+        });
+    </script>
+</body>
+</html>
